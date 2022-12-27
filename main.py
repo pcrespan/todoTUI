@@ -1,6 +1,8 @@
 import curses
 from curses import wrapper
 from curses.textpad import Textbox, rectangle
+import helpers
+
 
 # Initializing curses
 stdscr = curses.initscr()
