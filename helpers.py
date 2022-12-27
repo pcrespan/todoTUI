@@ -8,9 +8,23 @@ def addTask(task, description):
         writer.writerow({"task": task, "description": description})
 
 
-parser = argparse.ArgumentParser(prog="todoTUI", description="TUI to-do list")
-parser.add_argument("-a", nargs="+", help="Add task")
-args = parser.parse_args()
+def showTasks():
+    tasks = []
 
-if args.a:
-    addTask(args.a[0], args.a[1])
+    with open("todoTasks.csv", "r") as file:
+        reader = csv.DictReader(file)
+        print("juao")
+
+        for task, description in reader:
+            tasks.append({"task": task, "description": description})
+    return tasks
+
+
+def checkArgs():
+    parser = argparse.ArgumentParser(prog="todoTUI", description="TUI to-do list")
+    parser.add_argument("-a", nargs=2, help="Add task")
+    args = parser.parse_args()
+
+    if args.a:
+        addTask(args.a[0], args.a[1])
+        print("Task successfully added")

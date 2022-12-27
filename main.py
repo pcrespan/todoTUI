@@ -1,28 +1,27 @@
 import curses
 from curses import wrapper
-from curses.textpad import Textbox, rectangle
+from curses.textpad import rectangle
 import helpers
 
 
+helpers.checkArgs()
 # Initializing curses
 stdscr = curses.initscr()
 
 def main(stdscr):
     stdscr.clear()
-
-    # Creating text box
-    box = createBox()
+    
+    mainPage(stdscr)
     createRectangle()
 
     stdscr.refresh()
-    box.edit()
     stdscr.getkey()
 
 
-def createBox():
-    win = curses.newwin(curses.LINES - 4, curses.COLS - 4, 2, 2)
-    box = Textbox(win)
-    return box
+def mainPage(stdscr):
+    tasks = helpers.showTasks()
+    for task in tasks:
+        stdscr.addstr(task["task"])
 
 
 def createRectangle():
