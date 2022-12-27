@@ -3,7 +3,7 @@ import csv
 
 
 def addTask(task, description):
-    with open("todoTasks.csv", "w") as file:
+    with open("todoTasks.csv", "a") as file:
         writer = csv.DictWriter(file, fieldnames=["task", "description"])
         writer.writerow({"task": task, "description": description})
 
