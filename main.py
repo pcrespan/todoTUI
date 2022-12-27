@@ -18,12 +18,12 @@ def main(stdscr):
 
 
 def createBox():
-    win = curses.newwin(curses.LINES - 2, curses.COLS - 2)
+    win = curses.newwin(curses.LINES - 4, curses.COLS - 4, 2, 2)
     box = Textbox(win)
     return box
 
 
 def createRectangle():
-    rectangle(stdscr, 2, 2, curses.LINES - 2, curses.COLS - 2)
+    rectangle(stdscr, 1, 1, curses.LINES - 2, curses.COLS - 2)
 
 wrapper(main)
