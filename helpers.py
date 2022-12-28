@@ -1,3 +1,4 @@
+import curses
 import argparse
 import csv
 
@@ -29,3 +30,28 @@ def checkArgs():
         addTask(args.a[0], args.a[1])
         print("Task successfully added")
         exit(0)
+
+
+def move():
+    
+    movementWindow = curses.newwin(curses.LINES - 4, 2, 2, 3)
+    movementWindow.clear()
+    movementWindow.refresh()
+
+    y = 0
+    while True:
+        key = movementWindow.getkey()
+        
+        if key == "KEY_UP" and y != 0:
+            y += 2
+            moveCursor(y, movementWindow)
+        elif key == "KEY_DOWN" and y != curses.LINES - 4:
+            y -= 2
+            moveCursor(y, movementWindow)
+        elif key == "q":
+            exit(0)
+
+
+def moveCursor(y, window):
+    window.addstr(y, 2, "x")
+    window.refresh()
