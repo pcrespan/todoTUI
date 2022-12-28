@@ -3,8 +3,9 @@ from curses import wrapper
 from curses.textpad import rectangle
 import helpers
 
-
+# Checking arguments passed on execution
 helpers.checkArgs()
+
 # Initializing curses
 stdscr = curses.initscr()
 

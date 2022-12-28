@@ -13,10 +13,10 @@ def showTasks():
 
     with open("todoTasks.csv", "r") as file:
         reader = csv.DictReader(file)
-        print("juao")
+        print(reader)
 
-        for task, description in reader:
-            tasks.append({"task": task, "description": description})
+        for task in reader:
+            tasks.append(task)
     return tasks
 
 
@@ -28,3 +28,4 @@ def checkArgs():
     if args.a:
         addTask(args.a[0], args.a[1])
         print("Task successfully added")
+        exit(0)
