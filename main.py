@@ -24,18 +24,18 @@ def main(stdscr):
 
 # Needs refactoring
 def showTasks():
-    win = curses.newwin(curses.LINES - 4, curses.COLS - 8, 2, 6)
+    win = curses.newpad(curses.LINES - 4, curses.COLS - 4)
     tasks = helpers.getTasks()
 
     win.clear()
-    win.refresh()
+    win.refresh(0, 0, 6, 6, curses.LINES - 4, curses.COLS - 4)
 
     n = 0
 
     for task in tasks:
         win.addstr(n, 2, task["task"])
         n += 2
-    win.refresh()
+    win.refresh(0, 0, 2, 6, curses.LINES - 4, curses.COLS - 4)
 
     # n - 2 is where the last task is located
     return n - 2
