@@ -1,2 +1,4 @@
 task,description
 Create movement,Make cursor move through screen
+Fix rectangle,Not showing right side
+Pass showTasks y to move function,Stop movement at that position

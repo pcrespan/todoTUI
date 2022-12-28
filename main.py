@@ -22,7 +22,7 @@ def main(stdscr):
 
 
 def mainPage():
-    win = curses.newwin(curses.LINES - 4, curses.COLS - 4, 2, 6)
+    win = curses.newwin(curses.LINES - 4, curses.COLS - 8, 2, 6)
     tasks = helpers.showTasks()
 
     win.clear()
