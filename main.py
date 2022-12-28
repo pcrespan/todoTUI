@@ -11,19 +11,21 @@ helpers.checkArgs()
 stdscr = curses.initscr()
 
 
+# Needs refactoring
 def main(stdscr):
     stdscr.clear()
     
     createRectangle()
     stdscr.refresh()
-    mainPage()
+    n = showTasks()
 
-    helpers.move()
+    helpers.move(n)
 
 
-def mainPage():
+# Needs refactoring
+def showTasks():
     win = curses.newwin(curses.LINES - 4, curses.COLS - 8, 2, 6)
-    tasks = helpers.showTasks()
+    tasks = helpers.getTasks()
 
     win.clear()
     win.refresh()
@@ -34,6 +36,9 @@ def mainPage():
         win.addstr(n, 2, task["task"])
         n += 2
     win.refresh()
+
+    # n - 2 is where the last task is located
+    return n - 2
 
 
 def createRectangle():

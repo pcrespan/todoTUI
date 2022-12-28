@@ -9,7 +9,7 @@ def addTask(task, description):
         writer.writerow({"task": task, "description": description})
 
 
-def showTasks():
+def getTasks():
     tasks = []
 
     with open("todoTasks.csv", "r") as file:
@@ -31,7 +31,7 @@ def checkArgs():
         exit(0)
 
 
-def move():
+def move(n):
     y = 0
     
     movementWindow = curses.newwin(curses.LINES - 4, 3, 2, 3)
@@ -52,8 +52,8 @@ def move():
                 exit(0)
         if y < 0:
             y = 0
-        elif y >= curses.LINES - 4:
-            y = 0
+        elif y > n:
+            y = n
         moveCursor(y, movementWindow)
 
 
