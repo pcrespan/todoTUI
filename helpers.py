@@ -14,7 +14,6 @@ def showTasks():
 
     with open("todoTasks.csv", "r") as file:
         reader = csv.DictReader(file)
-        print(reader)
 
         for task in reader:
             tasks.append(task)
@@ -33,25 +32,32 @@ def checkArgs():
 
 
 def move():
+    y = 0
     
-    movementWindow = curses.newwin(curses.LINES - 4, 2, 2, 3)
+    movementWindow = curses.newwin(curses.LINES - 4, 3, 2, 3)
+    movementWindow.keypad(True)
     movementWindow.clear()
+    moveCursor(y, movementWindow)
     movementWindow.refresh()
 
-    y = 0
     while True:
         key = movementWindow.getkey()
         
-        if key == "KEY_UP" and y != 0:
-            y += 2
-            moveCursor(y, movementWindow)
-        elif key == "KEY_DOWN" and y != curses.LINES - 4:
-            y -= 2
-            moveCursor(y, movementWindow)
-        elif key == "q":
-            exit(0)
+        match key:
+            case "KEY_UP":
+                y -= 2
+            case "KEY_DOWN":
+                y += 2
+            case "q":
+                exit(0)
+        if y < 0:
+            y = 0
+        elif y >= curses.LINES - 4:
+            y = 0
+        moveCursor(y, movementWindow)
 
 
 def moveCursor(y, window):
+    window.clear()
     window.addstr(y, 2, "x")
     window.refresh()
