@@ -53,9 +53,11 @@ def move(n, taskWin):
                 exit(0)
         if y < 0:
             y = 0
-        elif y >= (curses.LINES - 4):
+        elif y >= (curses.LINES - 4) and y < n * 2:
             taskWinPosy += 2
             taskWin.refresh(taskWinPosy, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
+        if y > curses.LINES - 5:
+            y = curses.LINES - 5
         moveCursor(y, movementWindow)
 
 
