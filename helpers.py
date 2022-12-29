@@ -31,14 +31,19 @@ def checkArgs():
         exit(0)
 
 
-def move(n):
+def move(n, taskWin):
     y = 0
+    taskWinPosy = 0
+    movWinPosy = 0
+
+    taskWin.scrollok(True)
     
-    movementWindow = curses.newwin(curses.LINES - 4, 3, 2, 3)
+    movementWindow = curses.newpad(curses.LINES - 2, 3)
     movementWindow.keypad(True)
+    movementWindow.scrollok(True)
     movementWindow.clear()
     moveCursor(y, movementWindow)
-    movementWindow.refresh()
+    movementWindow.refresh(0, 0, 1, 3, curses.LINES - 2, 3)
 
     while True:
         key = movementWindow.getkey()
@@ -53,11 +58,14 @@ def move(n):
         if y < 0:
             y = 0
         elif y > n:
-            y = n
+            taskWinPosy += 2
+            movementWindow.scroll(2)
+            taskWin.scroll(2)
+            taskWin.refresh(taskWinPosy, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
         moveCursor(y, movementWindow)
 
 
 def moveCursor(y, window):
     window.clear()
     window.addstr(y, 2, "x")
-    window.refresh()
+    window.refresh(0, 0, 1, 3, curses.LINES - 2, 3)

@@ -17,32 +17,32 @@ def main(stdscr):
     
     createRectangle()
     stdscr.refresh()
-    n = showTasks()
+    n, taskWin = showTasks()
 
-    helpers.move(n)
+    helpers.move(n, taskWin)
 
 
 # Needs refactoring
 def showTasks():
-    win = curses.newpad(curses.LINES - 4, curses.COLS - 4)
+    win = curses.newpad(curses.LINES - 2, curses.COLS - 4)
     tasks = helpers.getTasks()
 
     win.clear()
-    win.refresh(0, 0, 6, 6, curses.LINES - 4, curses.COLS - 4)
+    win.refresh(0, 0, 6, 6, curses.LINES - 2, curses.COLS - 4)
 
     n = 0
 
     for task in tasks:
         win.addstr(n, 2, task["task"])
         n += 2
-    win.refresh(0, 0, 2, 6, curses.LINES - 4, curses.COLS - 4)
+    win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
 
     # n - 2 is where the last task is located
-    return n - 2
+    return n - 4, win
 
 
 def createRectangle():
-    rectangle(stdscr, 1, 1, curses.LINES - 2, curses.COLS - 2)
+    rectangle(stdscr, 0, 1, curses.LINES - 1, curses.COLS - 2)
 
 
 wrapper(main)
