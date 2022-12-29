@@ -24,8 +24,10 @@ def main(stdscr):
 
 # Needs refactoring
 def showTasks():
-    win = curses.newpad(curses.LINES - 2, curses.COLS - 4)
     tasks = helpers.getTasks()
+    taskQtd = len(tasks) * 2
+    win = curses.newpad(taskQtd, curses.COLS - 4)
+    win.scrollok(True)
 
     win.clear()
     win.refresh(0, 0, 6, 6, curses.LINES - 2, curses.COLS - 4)

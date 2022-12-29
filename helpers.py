@@ -35,10 +35,8 @@ def move(n, taskWin):
     y = 0
     taskWinPosy = 0
     movWinPosy = 0
-
-    taskWin.scrollok(True)
     
-    movementWindow = curses.newpad(curses.LINES - 2, 3)
+    movementWindow = curses.newpad(n * 2, 3)
     movementWindow.keypad(True)
     movementWindow.scrollok(True)
     movementWindow.clear()
@@ -57,10 +55,9 @@ def move(n, taskWin):
                 exit(0)
         if y < 0:
             y = 0
-        elif y > n:
+        elif y >= n or y >= (curses.LINES - 4):
+            y = n
             taskWinPosy += 2
-            movementWindow.scroll(2)
-            taskWin.scroll(2)
             taskWin.refresh(taskWinPosy, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
         moveCursor(y, movementWindow)
 
