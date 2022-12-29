@@ -34,11 +34,9 @@ def checkArgs():
 def move(n, taskWin):
     y = 0
     taskWinPosy = 0
-    movWinPosy = 0
     
     movementWindow = curses.newpad(n * 2, 3)
     movementWindow.keypad(True)
-    movementWindow.scrollok(True)
     movementWindow.clear()
     moveCursor(y, movementWindow)
     movementWindow.refresh(0, 0, 1, 3, curses.LINES - 2, 3)
@@ -55,8 +53,7 @@ def move(n, taskWin):
                 exit(0)
         if y < 0:
             y = 0
-        elif y >= n or y >= (curses.LINES - 4):
-            y = n
+        elif y >= (curses.LINES - 4):
             taskWinPosy += 2
             taskWin.refresh(taskWinPosy, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
         moveCursor(y, movementWindow)
