@@ -45,7 +45,7 @@ def move(n, taskWin):
     while True:
         key = movementWindow.getkey()
         
-        if key == "KEY_UP":
+        if key == "KEY_UP" and y > 0:
             y -= 1
             cursor -= 1
             taskWinPosy -= 1
