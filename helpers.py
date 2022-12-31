@@ -47,13 +47,17 @@ def move(n, taskWin):
             y -= 1
             cursor -= 1
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-        elif key == "KEY_DOWN" and y < n:
+        # y < n + 3 - curses.LINES to avoid scrolling past one whole screen
+        # + 3 because of window size (beginning and end)
+        elif key == "KEY_DOWN" and y < n + 3 - curses.LINES:
             y += 1
             cursor += 1
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
         elif key == 'q':
             exit(0)
         moveCursor(cursor, y, movementWindow)
+
+
 
 
 def moveCursor(cursor, y, window):
