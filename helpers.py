@@ -33,28 +33,24 @@ def checkArgs():
 
 def move(n, taskWin):
     y = 0
-    taskWinPosy = 0
     cursor = 0
     
-    movementWindow = curses.newpad(n * 2, 3)
+    movementWindow = curses.newwin(curses.LINES - 3, 3, 2, 2)
     movementWindow.keypad(True)
     movementWindow.clear()
     moveCursor(cursor, y, movementWindow)
-    movementWindow.refresh(0, 0, 1, 3, curses.LINES - 2, 3)
+    movementWindow.refresh()
 
     while True:
         key = movementWindow.getkey()
-        
         if key == "KEY_UP" and y > 0:
             y -= 1
             cursor -= 1
-            taskWinPosy -= 1
-            taskWin.refresh(taskWinPosy, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-        elif key == "KEY_DOWN" and y < n * 2:
+            taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
+        elif key == "KEY_DOWN" and y < n:
             y += 1
             cursor += 1
-            taskWinPosy += 1
-            taskWin.refresh(taskWinPosy, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
+            taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
         elif key == 'q':
             exit(0)
         moveCursor(cursor, y, movementWindow)
@@ -64,8 +60,9 @@ def moveCursor(cursor, y, window):
     if y < 0 or cursor < 0:
         y = 0
         cursor = 0
+        return
     if cursor > curses.LINES - 5:
         cursor = curses.LINES - 5
     window.clear()
-    window.addstr(y, 2, "x")
-    window.refresh(0, 0, 1, 3, curses.LINES - 2, 3)
+    window.addstr(cursor, 2, "x")
+    window.refresh()

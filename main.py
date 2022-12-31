@@ -30,7 +30,7 @@ def showTasks():
     win.scrollok(True)
 
     win.clear()
-    win.refresh(0, 0, 6, 6, curses.LINES - 2, curses.COLS - 4)
+    win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
 
     n = 0
 
@@ -39,8 +39,8 @@ def showTasks():
         n += 2
     win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
 
-    # n - 2 is where the last task is located
-    return n - 4, win
+    # n is where the last task is located
+    return n, win
 
 
 def createRectangle():
