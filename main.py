@@ -33,9 +33,11 @@ def showTasks():
     win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
 
     n = 0
+    i = 1
 
     for task in tasks:
-        win.addstr(n, 2, task["task"])
+        win.addstr(n, 0, str(i) + "." + " " + task["task"])
+        i += 1
         n += 2
     win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
 

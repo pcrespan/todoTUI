@@ -31,6 +31,7 @@ def checkArgs():
         exit(0)
 
 
+# Needs refactoring 
 def move(n, taskWin):
     y = 0
     cursor = 0
@@ -68,5 +69,5 @@ def moveCursor(cursor, y, window):
     if cursor > curses.LINES - 5:
         cursor = curses.LINES - 5
     window.clear()
-    window.addstr(cursor, 2, "x")
+    window.addstr(cursor, 2, "*")
     window.refresh()
