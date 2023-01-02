@@ -33,46 +33,21 @@ def checkArgs():
 
 def move(n, taskWin):
     y = 0
-    cursor = 0
     
     movementWindow = curses.newwin(curses.LINES - 3, 3, 2, 2)
     movementWindow.keypad(True)
     movementWindow.clear()
-    moveCursor(cursor, y, movementWindow)
     movementWindow.refresh()
 
     while True:
         key = movementWindow.getkey()
         if key == "KEY_UP" and y > 0:
-            cursor -= 1
-            if cursor >= curses.LINES - 5:
-                y -= 1
-                taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-            y -= 1
+            y -= 2
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-        # y < n + 3 - curses.LINES to avoid scrolling past one whole screen
-        # + 3 because of window size (beginning and end)
-        elif key == "KEY_DOWN" and y < n + 3 - curses.LINES:
-            if cursor >= curses.LINES - 5:
-                y += 1
-                taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-            y += 1
-            cursor += 1
+        # y < n + 2 - curses.LINES to avoid scrolling past one whole screen
+        # + 2 because of window size (beginning and end)
+        elif key == "KEY_DOWN" and y < n + 2 - curses.LINES:
+            y += 2
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
         elif key == 'q':
-            with open("test.txt", "w") as file:
-                file.write(str(y))
             exit(0)
-        moveCursor(cursor, y, movementWindow)
-
-
-def moveCursor(cursor, y, window):
-    if y < 0 or cursor < 0:
-        y = 0
-        cursor = 0
-        return
-    if cursor > curses.LINES - 5:
-        cursor = curses.LINES - 5
-    window.clear()
-    window.addstr(cursor, 2, "*")
-    window.refresh()
