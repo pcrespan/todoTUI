@@ -22,12 +22,23 @@ def getTasks():
 
 def finishTask(taskNumber):
     tasks = getTasks()
+    updatedStatus = ""
+
     with open("todoTasks.csv", "w") as file:
         writer = csv.DictWriter(file, fieldnames=["task", "status"])
-        tasks[taskNumber]["status"] = "finished"
+
+        if tasks[taskNumber]["status"] == "finished":
+            tasks[taskNumber]["status"] = "todo"
+            updatedStatus = "restored"
+        else:
+            tasks[taskNumber]["status"] = "finished"
+            updatedStatus = "finished"
+
         # Re-writing header and tasks to csv file
         writer.writeheader()
         writer.writerows(tasks)
+
+        return updatedStatus
 
 
 def checkArgs():
@@ -43,8 +54,8 @@ def checkArgs():
 
     if args.f:
         taskNumber = int(args.f) - 1
-        finishTask(taskNumber)
-        print(f"Task finished.")
+        status = finishTask(taskNumber)
+        print(f"Task {status}.")
         exit(0)
 
 
