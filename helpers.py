@@ -3,10 +3,10 @@ import argparse
 import csv
 
 
-def addTask(task, description):
+def addTask(task):
     with open("todoTasks.csv", "a") as file:
-        writer = csv.DictWriter(file, fieldnames=["task", "description"])
-        writer.writerow({"task": task, "description": description})
+        writer = csv.DictWriter(file, fieldnames=["task", "status"])
+        writer.writerow({"task": task, "status": "todo"})
 
 
 def getTasks():
@@ -20,14 +20,31 @@ def getTasks():
     return tasks
 
 
+def finishTask(taskNumber):
+    tasks = getTasks()
+    with open("todoTasks.csv", "w") as file:
+        writer = csv.DictWriter(file, fieldnames=["task", "status"])
+        tasks[taskNumber]["status"] = "finished"
+        # Re-writing header and tasks to csv file
+        writer.writeheader()
+        writer.writerows(tasks)
+
+
 def checkArgs():
     parser = argparse.ArgumentParser(prog="todoTUI", description="TUI to-do list")
-    parser.add_argument("-a", nargs=2, help="Add task")
+    parser.add_argument("-a", help="Add task")
+    parser.add_argument("-f", help="Finish task")
     args = parser.parse_args()
 
     if args.a:
-        addTask(args.a[0], args.a[1])
+        addTask(args.a)
         print("Task successfully added")
+        exit(0)
+
+    if args.f:
+        taskNumber = int(args.f) - 1
+        finishTask(taskNumber)
+        print(f"Task finished.")
         exit(0)
 
 
