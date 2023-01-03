@@ -36,7 +36,10 @@ def showTasks():
     i = 1
 
     for task in tasks:
-        win.addstr(n, 0, str(i) + "." + " " + task["task"])
+        if task["status"] == "finished":
+            win.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"])
+        else:
+            win.addstr(n, 0, str(i) + "." + " " + task["task"])
         i += 1
         n += 2
     win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
