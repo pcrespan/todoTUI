@@ -63,7 +63,7 @@ def checkArgs():
 # Needs refactoring
 def showTasks():
     tasks = getTasks()
-    taskQtd = len(tasks) * 2
+    taskQtd = len(tasks) * 3
 
     taskWin = windows.getTaskWin(taskQtd)
 
@@ -91,12 +91,10 @@ def move(n, taskWin):
     while True:
         key = movementWindow.getkey()
         if key == "KEY_UP" and y > 0:
-            y -= 2
-            taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-        # y < n + 2 - curses.LINES to avoid scrolling past one whole screen
-        # + 2 because of window size (beginning and end)
-        elif key == "KEY_DOWN" and y < n + 2 - curses.LINES:
-            y += 2
+            y -= curses.LINES - 5
+            taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
+        elif key == "KEY_DOWN" and y < n - curses.LINES - 5:
+            y += curses.LINES - 5
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
         elif key == 'q':
             exit(0)
