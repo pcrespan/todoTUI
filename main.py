@@ -22,6 +22,7 @@ def main(stdscr):
     stdscr.refresh()
     n, taskWin = helpers.showTasks()
     windows.getMenuWin()
+    windows.getPageMenu()
     helpers.move(n, taskWin)
 
 

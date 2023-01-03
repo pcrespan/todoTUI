@@ -25,3 +25,10 @@ def getMenuWin():
     menuWin.addstr(0, curses.COLS - 16,  "Next page" + " " + "")
     menuWin.refresh()
     return menuWin
+
+
+def getPageMenu():
+    pageMenu = curses.newwin(1, 20, curses.LINES - 2, round((curses.COLS - 5) / 2))
+    pageMenu.clear()
+    pageMenu.refresh()
+    return pageMenu
