@@ -1,7 +1,8 @@
 import curses
 from curses import wrapper
-from curses.textpad import rectangle
 import helpers
+from geometry import createRectangle
+import windows
 
 
 # Checking arguments passed on execution
@@ -15,41 +16,11 @@ stdscr = curses.initscr()
 def main(stdscr):
     stdscr.clear()
     
-    createRectangle()
+    createRectangle(stdscr)
     stdscr.refresh()
-    n, taskWin = showTasks()
+    n, taskWin = helpers.showTasks()
 
     helpers.move(n, taskWin)
-
-
-# Needs refactoring
-def showTasks():
-    tasks = helpers.getTasks()
-    taskQtd = len(tasks) * 2
-    win = curses.newpad(taskQtd, curses.COLS - 4)
-    win.scrollok(True)
-
-    win.clear()
-    win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-
-    n = 0
-    i = 1
-
-    for task in tasks:
-        if task["status"] == "finished":
-            win.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"])
-        else:
-            win.addstr(n, 0, str(i) + "." + " " + task["task"])
-        i += 1
-        n += 2
-    win.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
-
-    # n is where the last task is located
-    return n, win
-
-
-def createRectangle():
-    rectangle(stdscr, 0, 1, curses.LINES - 1, curses.COLS - 2)
 
 
 wrapper(main)

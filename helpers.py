@@ -1,6 +1,7 @@
 import curses
 import argparse
 import csv
+import windows
 
 
 def addTask(task):
@@ -59,13 +60,33 @@ def checkArgs():
         exit(0)
 
 
+# Needs refactoring
+def showTasks():
+    tasks = getTasks()
+    taskQtd = len(tasks) * 2
+
+    taskWin = windows.getTaskWin(taskQtd)
+
+    n = 0
+    i = 1
+
+    for task in tasks:
+        if task["status"] == "finished":
+            taskWin.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"])
+        else:
+            taskWin.addstr(n, 0, str(i) + "." + " " + task["task"])
+        i += 1
+        n += 2
+    taskWin.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
+
+    # n is where the last task is located
+    return n, taskWin
+
+
 def move(n, taskWin):
     y = 0
-    
-    movementWindow = curses.newwin(curses.LINES - 3, 3, 2, 2)
-    movementWindow.keypad(True)
-    movementWindow.clear()
-    movementWindow.refresh()
+   
+    movementWindow = windows.getMovementWindow()
 
     while True:
         key = movementWindow.getkey()
