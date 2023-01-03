@@ -93,7 +93,7 @@ def move(n, taskWin):
         if key == "KEY_UP" and y > 0:
             y -= curses.LINES - 5
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
-        elif key == "KEY_DOWN" and y < n - curses.LINES - 5:
+        elif key == "KEY_DOWN" and y < n + 4 - curses.LINES:
             y += curses.LINES - 5
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
         elif key == 'q':
