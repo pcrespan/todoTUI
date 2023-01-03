@@ -30,5 +30,6 @@ def getMenuWin():
 def getPageMenu():
     pageMenu = curses.newwin(1, 20, curses.LINES - 2, round((curses.COLS - 5) / 2))
     pageMenu.clear()
+    pageMenu.addstr(0, 0, "Page 1")
     pageMenu.refresh()
     return pageMenu

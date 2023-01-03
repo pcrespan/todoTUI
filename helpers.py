@@ -83,8 +83,9 @@ def showTasks():
     return n, taskWin
 
 
-def move(n, taskWin):
+def move(n, taskWin, pageMenu):
     y = 0
+    page = 1
    
     movementWindow = windows.getMovementWindow()
 
@@ -92,10 +93,20 @@ def move(n, taskWin):
         key = movementWindow.getkey()
         if key == "KEY_LEFT" and y > 0:
             y -= curses.LINES - 5
+            page -= 1
+            updatePageNumber(pageMenu, page)
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
         # Allow scrolling for last screen
         elif key == "KEY_RIGHT" and y < n + 4 - curses.LINES:
             y += curses.LINES - 5
+            page += 1
+            updatePageNumber(pageMenu, page)
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
         elif key == 'q':
             exit(0)
+
+
+def updatePageNumber(pageMenu, page):
+    pageMenu.clear()
+    pageMenu.addstr(0, 0, f"Page {page}")
+    pageMenu.refresh()
