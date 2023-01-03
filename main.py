@@ -1,8 +1,7 @@
 import curses
 from curses import wrapper
 import helpers
-from geometry import createRectangle
-import windows
+from geometry import createRectangle, getTaskRectangle, getMenuRectangle
 
 
 # Checking arguments passed on execution
@@ -16,10 +15,11 @@ stdscr = curses.initscr()
 def main(stdscr):
     stdscr.clear()
     
-    createRectangle(stdscr)
+    #createRectangle(stdscr)
+    getTaskRectangle(stdscr)
+    getMenuRectangle(stdscr)
     stdscr.refresh()
     n, taskWin = helpers.showTasks()
-
     helpers.move(n, taskWin)
 
 
