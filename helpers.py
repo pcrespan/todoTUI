@@ -77,7 +77,7 @@ def showTasks():
             taskWin.addstr(n, 0, str(i) + "." + " " + task["task"])
         i += 1
         n += 2
-    taskWin.refresh(0, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
+    taskWin.refresh(0, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
 
     # n is where the last task is located
     return n, taskWin
@@ -97,6 +97,6 @@ def move(n, taskWin):
         # + 2 because of window size (beginning and end)
         elif key == "KEY_DOWN" and y < n + 2 - curses.LINES:
             y += 2
-            taskWin.refresh(y, 0, 2, 6, curses.LINES - 2, curses.COLS - 4)
+            taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
         elif key == 'q':
             exit(0)
