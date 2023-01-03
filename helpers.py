@@ -90,10 +90,11 @@ def move(n, taskWin):
 
     while True:
         key = movementWindow.getkey()
-        if key == "KEY_UP" and y > 0:
+        if key == "KEY_LEFT" and y > 0:
             y -= curses.LINES - 5
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
-        elif key == "KEY_DOWN" and y < n + 4 - curses.LINES:
+        # Allow scrolling for last screen
+        elif key == "KEY_RIGHT" and y < n + 4 - curses.LINES:
             y += curses.LINES - 5
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
         elif key == 'q':

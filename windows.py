@@ -15,3 +15,13 @@ def getTaskWin(taskQtd):
     taskWin.clear()
     taskWin.refresh(0, 0, 2, 6, curses.LINES - 6, curses.COLS - 4)
     return taskWin
+
+
+def getMenuWin():
+    menuWin = curses.newwin(1, curses.COLS - 4, curses.LINES - 2, 2)
+    menuWin.clear()
+    menuWin.refresh()
+    menuWin.addstr(0, 1, "" + " " + "Previous page")
+    menuWin.addstr(0, curses.COLS - 16,  "Next page" + " " + "")
+    menuWin.refresh()
+    return menuWin

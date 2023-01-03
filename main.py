@@ -2,6 +2,7 @@ import curses
 from curses import wrapper
 import helpers
 from geometry import getTaskRectangle, getMenuRectangle
+import windows
 
 
 # Checking arguments passed on execution
@@ -20,6 +21,7 @@ def main(stdscr):
     getMenuRectangle(stdscr)
     stdscr.refresh()
     n, taskWin = helpers.showTasks()
+    windows.getMenuWin()
     helpers.move(n, taskWin)
 
 
