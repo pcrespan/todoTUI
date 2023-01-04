@@ -8,6 +8,7 @@ def createRectangle(stdscr):
 
 def getTaskRectangle(stdscr):
     rectangle(stdscr, 0, 1, curses.LINES - 4, curses.COLS - 2)
+    stdscr.addstr(0, round((curses.COLS - 5) / 2), "todoTUI")
 
 
 def getMenuRectangle(stdscr):

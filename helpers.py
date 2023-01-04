@@ -63,7 +63,9 @@ def checkArgs():
 # Needs refactoring
 def showTasks():
     tasks = getTasks()
-    taskQtd = len(tasks) * 3
+    # Making window bigger so that it
+    # doesn't glitch showing unwanted tasks
+    taskQtd = len(tasks) * 4
 
     taskWin = windows.getTaskWin(taskQtd)
 

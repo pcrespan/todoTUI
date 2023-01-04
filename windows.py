@@ -10,11 +10,15 @@ def getMovementWindow():
 
 
 def getTaskWin(taskQtd):
-    taskWin = curses.newpad(taskQtd, curses.COLS - 4)
-    taskWin.scrollok(True)
-    taskWin.clear()
-    taskWin.refresh(0, 0, 2, 6, curses.LINES - 6, curses.COLS - 4)
-    return taskWin
+    try:
+        taskWin = curses.newpad(taskQtd, curses.COLS - 4)
+        taskWin.scrollok(True)
+        taskWin.clear()
+        taskWin.refresh(0, 0, 2, 6, curses.LINES - 6, curses.COLS - 4)
+        return taskWin
+    except Exception:
+        print("No tasks registered. Use '-a' flag to add one.")
+        exit(0)
 
 
 def getMenuWin():
