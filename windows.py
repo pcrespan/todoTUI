@@ -17,7 +17,8 @@ def getTaskWin(taskQtd):
         taskWin.refresh(0, 0, 2, 6, curses.LINES - 6, curses.COLS - 4)
         return taskWin
     except Exception:
-        print("No tasks registered. Use '-a' flag to add one.")
+        curses.endwin()
+        print("No tasks registered. Add one using '-a'.")
         exit(0)
 
 

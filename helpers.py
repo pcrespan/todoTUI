@@ -18,6 +18,11 @@ def getTasks():
 
         for task in reader:
             tasks.append(task)
+
+    if len(tasks) == 0:
+        print("There are no tasks registered. Add one using -a.")
+        exit(0)
+
     return tasks
 
 
@@ -61,8 +66,7 @@ def checkArgs():
 
 
 # Needs refactoring
-def showTasks():
-    tasks = getTasks()
+def showTasks(tasks):
     # Making window bigger so that it
     # doesn't glitch showing unwanted tasks
     taskQtd = len(tasks) * 4
