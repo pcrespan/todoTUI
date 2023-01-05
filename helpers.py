@@ -91,7 +91,7 @@ def showTasks(tasks):
         if task["status"] == "finished":
             taskWin.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"], taskFinishedColor)
         else:
-            taskWin.addstr(n, 0, str(i) + "." + " " + task["task"])
+            taskWin.addstr(n, 0, " " * 2 + str(i) + "." + " " + task["task"])
         i += 1
         n += 2
     taskWin.refresh(0, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
