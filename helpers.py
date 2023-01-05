@@ -51,6 +51,25 @@ def finishTask(taskNumber):
         return updatedStatus
 
 
+def removeTask(taskNumber):
+    tasks = getTasks()
+
+    if taskNumber < 0 or taskNumber > len(tasks) - 1:
+        print("Invalid task number.")
+        exit(1)
+
+    with open("todoTasks.csv", "w") as file:
+        writer = csv.DictWriter(file, fieldnames=["task", "status"])
+
+        del tasks[taskNumber]
+
+        writer.writeheader()
+        writer.writerows(tasks)
+
+        print("Task removed.")
+        exit(0)
+
+
 def checkArgs():
     parser = argparse.ArgumentParser(prog="todoTUI", description="TUI to-do list")
     parser.add_argument("-a", help="Add task")
@@ -65,6 +84,7 @@ def checkArgs():
     if args.f:
         taskNumber = int(args.f) - 1
 
+        # Need to add this conditional to finishTask
         if taskNumber < 0:
             print("Invalid task number.")
             exit(1)
