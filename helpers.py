@@ -30,6 +30,10 @@ def finishTask(taskNumber):
     tasks = getTasks()
     updatedStatus = ""
 
+    if taskNumber > len(tasks) - 1:
+        print("Task doesn't exist.")
+        exit(1)
+
     with open("todoTasks.csv", "w") as file:
         writer = csv.DictWriter(file, fieldnames=["task", "status"])
 
@@ -60,6 +64,11 @@ def checkArgs():
 
     if args.f:
         taskNumber = int(args.f) - 1
+
+        if taskNumber < 0:
+            print("Invalid task number.")
+            exit(1)
+
         status = finishTask(taskNumber)
         print(f"Task {status}.")
         exit(0)
