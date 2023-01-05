@@ -76,6 +76,8 @@ def checkArgs():
 
 # Needs refactoring
 def showTasks(tasks):
+    taskFinishedColor = getFinishedTaskColor()
+
     # Making window bigger so that it
     # doesn't glitch showing unwanted tasks
     taskQtd = len(tasks) * 4
@@ -87,7 +89,7 @@ def showTasks(tasks):
 
     for task in tasks:
         if task["status"] == "finished":
-            taskWin.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"])
+            taskWin.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"], taskFinishedColor)
         else:
             taskWin.addstr(n, 0, str(i) + "." + " " + task["task"])
         i += 1
@@ -96,6 +98,12 @@ def showTasks(tasks):
 
     # n is where the last task is located
     return n, taskWin
+
+
+def getFinishedTaskColor():
+    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+    taskFinishedColor = curses.color_pair(1)
+    return taskFinishedColor
 
 
 def move(n, taskWin, pageMenu):
