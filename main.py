@@ -23,7 +23,6 @@ def main(stdscr):
     getMenuRectangle(stdscr)
     stdscr.refresh()
 
-
     n, taskWin = helpers.showTasks(tasks)
     windows.getMenuWin()
     pageMenu = windows.getPageMenu()
