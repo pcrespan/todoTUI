@@ -74,6 +74,7 @@ def checkArgs():
     parser = argparse.ArgumentParser(prog="todoTUI", description="TUI to-do list")
     parser.add_argument("-a", help="Add task")
     parser.add_argument("-f", help="Finish task")
+    parser.add_argument("-r", help="Remove task")
     args = parser.parse_args()
 
     if args.a:
@@ -88,10 +89,13 @@ def checkArgs():
         if taskNumber < 0:
             print("Invalid task number.")
             exit(1)
-
         status = finishTask(taskNumber)
         print(f"Task {status}.")
         exit(0)
+
+    if args.r:
+        taskNumber = int(args.r) - 1
+        removeTask(taskNumber)
 
 
 # Needs refactoring
