@@ -106,6 +106,7 @@ def getFinishedTaskColor():
     return taskFinishedColor
 
 
+# Might be good to create scrollUp and scrollDown functions
 def move(n, taskWin, pageMenu):
     y = 0
     page = 1
@@ -115,13 +116,13 @@ def move(n, taskWin, pageMenu):
     while True:
         key = movementWindow.getkey()
         if key == "KEY_LEFT" and y > 0:
-            y -= curses.LINES - 5
+            y -= curses.LINES - 5   # Scroll one screen up
             page -= 1
             updatePageNumber(pageMenu, page)
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
-        # Allow scrolling for last screen
+        # On the last screen, scroll just enough so that the words appear
         elif key == "KEY_RIGHT" and y < n + 4 - curses.LINES:
-            y += curses.LINES - 5
+            y += curses.LINES - 5   # Scroll one screen down
             page += 1
             updatePageNumber(pageMenu, page)
             taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
