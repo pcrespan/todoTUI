@@ -32,7 +32,10 @@ def listTasks():
     if tasks is not None:
         i = 1
         for task in tasks:
-            print(str(i) + "." + " " + task["task"])
+            if task["status"] == "finished":
+                print("" + " " + str(i) + "." + task["task"])
+            else:
+                print(" " * 2 + str(i) + "." + " " + task["task"])
             i += 1
         exit(0)
     print("No tasks registered.")
