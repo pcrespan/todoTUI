@@ -138,7 +138,7 @@ def showTasks(tasks):
             taskWin.addstr(n, 0, " " * 2 + str(i) + "." + " " + task["task"])
         i += 1
         n += 2
-    taskWin.refresh(0, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
+    taskWin.refresh(0, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
 
     # n is where the last task is located
     return n, taskWin
@@ -153,23 +153,46 @@ def getFinishedTaskColor():
 # Might be good to create scrollUp and scrollDown functions
 def move(n, taskWin, pageMenu):
     y = 0
+    cursor = 0
+    cursorPos = 0
+    task = 1
     page = 1
    
     movementWindow = windows.getMovementWindow()
 
     while True:
         key = movementWindow.getkey()
-        if key == "KEY_LEFT" and y > 0:
-            y -= curses.LINES - 5   # Scroll one screen up
-            page -= 1
-            updatePageNumber(pageMenu, page)
-            taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
-        # On the last screen, scroll just enough so that the words appear
-        elif key == "KEY_RIGHT" and y < n + 4 - curses.LINES:
-            y += curses.LINES - 5   # Scroll one screen down
-            page += 1
-            updatePageNumber(pageMenu, page)
-            taskWin.refresh(y, 0, 2, 6, curses.LINES - 5, curses.COLS - 4)
+
+        if key == "KEY_UP":
+            if cursor == 0 and y > 0:
+                y -= curses.LINES - 5
+                cursor = curses.LINES - 7
+                cursorPos -= 2
+                task -= 1
+                page -= 1
+                updatePageNumber(pageMenu, page)
+                taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+            elif cursor > 0:
+                cursor -= 2
+                task -= 1
+                cursorPos -= 2
+            movementWindow.clear()
+            movementWindow.addstr(cursor, 2, "*")
+            movementWindow.refresh()
+        elif key == "KEY_DOWN" and cursorPos < n - 2:
+            cursor += 2
+            cursorPos += 2
+            task += 1
+            if cursor > curses.LINES - 7:
+                cursor = 0
+                y += curses.LINES - 5   # Scroll one screen down
+                page += 1
+                task += 1
+                updatePageNumber(pageMenu, page)
+                taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+            movementWindow.clear()
+            movementWindow.addstr(cursor, 2, "*")
+            movementWindow.refresh()
         elif key == 'q':
             exit(0)
 
