@@ -26,6 +26,19 @@ def getTasks():
     return tasks
 
 
+def listTasks():
+    tasks = getTasks()
+
+    if tasks is not None:
+        i = 1
+        for task in tasks:
+            print(str(i) + "." + " " + task["task"])
+            i += 1
+        exit(0)
+    print("No tasks registered.")
+    exit(1)
+    
+
 def finishTask(taskNumber):
     tasks = getTasks()
     updatedStatus = ""
@@ -75,6 +88,7 @@ def checkArgs():
     parser.add_argument("-a", help="Add task")
     parser.add_argument("-f", help="Finish task")
     parser.add_argument("-r", help="Remove task")
+    parser.add_argument("-l", help="List tasks", action="store_true")   # Action store_true means default=False
     args = parser.parse_args()
 
     if args.a:
@@ -96,6 +110,9 @@ def checkArgs():
     if args.r:
         taskNumber = int(args.r) - 1
         removeTask(taskNumber)
+
+    if args.l:
+        listTasks()
 
 
 # Needs refactoring
