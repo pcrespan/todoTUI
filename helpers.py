@@ -144,6 +144,23 @@ def showTasks(tasks):
     return n, taskWin
 
 
+def updateTasks(tasks, taskWin, y):
+    taskWin.clear()
+    taskFinishedColor = getFinishedTaskColor()
+
+    n = 0
+    i = 1
+
+    for task in tasks:
+        if task["status"] == "finished":
+            taskWin.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"], taskFinishedColor)
+        else:
+            taskWin.addstr(n, 0, " " * 2 + str(i) + "." + " " + task["task"])
+        n += 2
+        i += 1
+    taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+
+
 def getFinishedTaskColor():
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
     taskFinishedColor = curses.color_pair(1)
@@ -152,10 +169,11 @@ def getFinishedTaskColor():
 
 # Might be good to create scrollUp and scrollDown functions
 def move(n, taskWin, pageMenu):
+    # Write setInitialValues function for these values
     y = 0
     cursor = 0
     cursorPos = 0
-    task = 1
+    task = 0
     page = 1
    
     movementWindow = windows.getMovementWindow()
@@ -163,6 +181,7 @@ def move(n, taskWin, pageMenu):
     while True:
         key = movementWindow.getkey()
 
+        # Obviously needs refactoring
         if key == "KEY_UP":
             if cursor == 0 and y > 0:
                 y -= curses.LINES - 5
@@ -182,7 +201,6 @@ def move(n, taskWin, pageMenu):
         elif key == "KEY_DOWN" and cursorPos < n - 2:
             cursor += 2
             cursorPos += 2
-            task += 1
             if cursor > curses.LINES - 7:
                 cursor = 0
                 y += curses.LINES - 5   # Scroll one screen down
@@ -190,9 +208,16 @@ def move(n, taskWin, pageMenu):
                 task += 1
                 updatePageNumber(pageMenu, page)
                 taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+            else:
+                task += 1
             movementWindow.clear()
             movementWindow.addstr(cursor, 2, "*")
             movementWindow.refresh()
+        elif key == "f":
+            # Needs refactoring. Opening csv file too many times
+            finishTask(task)
+            taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+            updateTasks(getTasks(), taskWin, y)
         elif key == 'q':
             exit(0)
 
