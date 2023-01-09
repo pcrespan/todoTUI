@@ -97,4 +97,3 @@ def move(n, taskWin, pageMenu):
 
         elif key == 'q':
             exit(0)
-
