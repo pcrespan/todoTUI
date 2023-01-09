@@ -82,8 +82,6 @@ def removeTask(taskNumber):
         writer.writeheader()
         writer.writerows(tasks)
 
-        print("Task removed.")
-        exit(0)
 
 
 def checkArgs():
@@ -218,6 +216,32 @@ def move(n, taskWin, pageMenu):
             finishTask(task)
             taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
             updateTasks(getTasks(), taskWin, y)
+        elif key == "r":
+            removeTask(task)
+            # Avoiding extra scrolling
+            cursor -= 2
+            if cursor < 0 and task > 0:
+                cursor = curses.LINES - 7
+                task -= 1
+                y -= curses.LINES - 5
+                cursorPos -= 2
+                page -= 1
+                n -= 2
+                taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+            elif cursor < 0 and task == 0:
+                cursor = 0
+                n -= 2
+                taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+            else:
+                cursorPos -= 2
+                task -= 1
+                n -= 2
+                taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+            updateTasks(getTasks(), taskWin, y)
+            movementWindow.clear()
+            movementWindow.addstr(cursor, 2, "*")
+            movementWindow.refresh()
+
         elif key == 'q':
             exit(0)
 
