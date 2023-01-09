@@ -1,8 +1,9 @@
 import curses
-from curses import wrapper
-import helpers
-from geometry import getTaskRectangle, getMenuRectangle
 import windows
+import helpers
+import movement
+from curses import wrapper
+from geometry import getTaskRectangle, getMenuRectangle
 
 
 # Checking arguments passed on execution
@@ -29,7 +30,7 @@ def main(stdscr):
     n, taskWin = helpers.showTasks(tasks)
     windows.getMenuWin()
     pageMenu = windows.getPageMenu()
-    helpers.move(n, taskWin, pageMenu)
+    movement.move(n, taskWin, pageMenu)
 
 
 wrapper(main)
