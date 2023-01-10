@@ -5,7 +5,7 @@ def getMovementWindow():
     movementWindow = curses.newwin(curses.LINES - 5, 3, 1, 2)
     movementWindow.keypad(True)
     movementWindow.clear()
-    movementWindow.addstr(0, 2, "*")
+    movementWindow.addstr(0, 2, "")
     movementWindow.refresh()
     return movementWindow
 

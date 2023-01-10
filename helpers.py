@@ -141,6 +141,7 @@ def showTasks(tasks):
     return n, taskWin
 
 
+# Obviously needs refactoring
 def updateTasks(tasks, taskWin, y):
     taskWin.clear()
     taskFinishedColor = getFinishedTaskColor()
@@ -175,7 +176,7 @@ def setInitialValues():
 
 def updateMovementWin(movementWindow, cursor):
     movementWindow.clear()
-    movementWindow.addstr(cursor, 2, "*")
+    movementWindow.addstr(cursor, 2, "")
     movementWindow.refresh()
 
 
