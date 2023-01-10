@@ -30,7 +30,9 @@ def main(stdscr):
     n, taskWin = helpers.showTasks(tasks)
     windows.getMenuWin()
     pageMenu = windows.getPageMenu()
-    movement.move(n, taskWin, pageMenu)
+
+    interface = movement.Interface(taskWin, pageMenu, n)
+    interface.keyListener()
 
 
 wrapper(main)

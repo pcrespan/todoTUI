@@ -3,97 +3,122 @@ import helpers
 import windows
 
 
-def scrollUp(y, cursor, cursorPos, task, page):
-    y -= curses.LINES - 5
-    cursor = curses.LINES - 7
-    cursorPos -= 2
-    task -= 1
-    page -= 1
-    return y, cursor, cursorPos, task, page
+class Interface:
+    def __init__(self, taskWin, pageMenu, n):
+        self.taskWin = taskWin
+        self.movementWindow = windows.getMovementWindow()
+        self.pageMenu = pageMenu
+        self.cursorLimit = curses.LINES - 7
+        self.lines = curses.LINES - 5
+        self.cols = curses.COLS - 4
+        self.n = n
+        self.y = 0
+        self.cursor = 0
+        self.cursorPos = 0
+        self.task = 0
+        self.page = 1
+        # Problem is here, executing functions on dictionary
+        self.acceptedMoves = {
+                "KEY_UP": self.keyUp,
+                "KEY_DOWN": self.keyDown,
+                "f": self.keyF,
+                "r": self.keyR,
+                "q": self.keyQ
+                }
 
 
-def scrollDown(y, cursor, cursorPos, task, page):
-    cursor = 0
-    y += curses.LINES - 5   # Scroll one screen down
-    page += 1
-    task += 1
-    return y, cursor, cursorPos, task, page
+    def keyListener(self):
+
+        while True:
+            key = self.movementWindow.getkey()
+
+            if key in self.acceptedMoves:
+                function = self.acceptedMoves[key]
+                function()
+
+    
+    def scrollUp(self):
+        self.y -= self.lines
+        self.cursor = self.cursorLimit
+        self.cursorPos -= 2
+        self.task -= 1
+        self.page -= 1
 
 
-# Might be good to create scrollUp and scrollDown functions
-def move(n, taskWin, pageMenu):
-    # Setting initial values
-    y, cursor, cursorPos, task, page = helpers.setInitialValues()
+    def scrollDown(self):
+        self.cursor = 0
+        self.cursorPos += 2
+        self.y += self.lines   # Scroll one screen down
+        self.page += 1
+        self.task += 1
 
-    lines = curses.LINES - 5
-    cols = curses.COLS - 4
 
-    movementWindow = windows.getMovementWindow()
+    def keyUp(self):
+        if self.cursor == 0 and self.y > 0:
+            self.scrollUp()
+            helpers.updatePageNumber(self.pageMenu, self.page)
+            self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
 
-    while True:
-        key = movementWindow.getkey()
+        elif self.cursor > 0:
+            self.cursor -= 2
+            self.task -= 1
+            self.cursorPos -= 2
 
-        # Obviously needs refactoring
-        if key == "KEY_UP":
+        helpers.updateMovementWin(self.movementWindow, self.cursor)
 
-            if cursor == 0 and y > 0:
-                y, cursor, cursorPos, task, page = scrollUp(y, cursor, cursorPos, task, page)
-                helpers.updatePageNumber(pageMenu, page)
-                taskWin.refresh(y, 0, 1, 6, lines, cols)
 
-            elif cursor > 0:
-                cursor -= 2
-                task -= 1
-                cursorPos -= 2
-            helpers.updateMovementWin(movementWindow, cursor)
+    def keyDown(self):
+        if self.cursorPos < self.n - 2:
 
-        elif key == "KEY_DOWN" and cursorPos < n - 2:
-            cursor += 2
-            cursorPos += 2
-
-            if cursor > curses.LINES - 7:
-                y, cursor, cursorPos, task, page = scrollDown(y, cursor, cursorPos, task, page)
-                helpers.updatePageNumber(pageMenu, page)
-                taskWin.refresh(y, 0, 1, 6, lines, cols)
-
-            else:
-                task += 1
-            helpers.updateMovementWin(movementWindow, cursor)
-
-        elif key == "f":
-            # Needs refactoring. Opening csv file too many times
-            helpers.finishTask(task)
-            taskWin.refresh(y, 0, 1, 6, lines, cols)
-            helpers.updateTasks(helpers.getTasks(), taskWin, y)
-
-        elif key == "r":
-            helpers.removeTask(task)
-            # Avoiding extra scrolling
-            cursor -= 2
-
-            if cursor < 0 and task > 0:
-                cursor = curses.LINES - 7
-                task -= 1
-                y -= lines
-                cursorPos -= 2
-                page -= 1
-                n -= 2
-                helpers.updatePageNumber(pageMenu, page)
-                taskWin.refresh(y, 0, 1, 6, lines, cols)
-
-            elif cursor < 0 and task == 0:
-                cursor = 0
-                n -= 2
-                taskWin.refresh(y, 0, 1, 6, lines, cols)
+            if self.cursor + 2 > self.cursorLimit:
+                self.scrollDown()
+                helpers.updatePageNumber(self.pageMenu, self.page)
+                self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
 
             else:
-                cursorPos -= 2
-                task -= 1
-                n -= 2
-                taskWin.refresh(y, 0, 1, 6, lines, cols)
-                helpers.updatePageNumber(pageMenu, page)
-            helpers.updateTasks(helpers.getTasks(), taskWin, y)
-            helpers.updateMovementWin(movementWindow, cursor)
+                self.cursor += 2
+                self.cursorPos += 2
+                self.task += 1
 
-        elif key == 'q':
-            exit(0)
+            helpers.updateMovementWin(self.movementWindow, self.cursor)
+                
+
+    def keyF(self):
+        helpers.finishTask(self.task)
+        self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
+        helpers.updateTasks(helpers.getTasks(), self.taskWin, self.y)
+
+
+    def keyR(self):
+        helpers.removeTask(self.task)
+
+        self.cursor -= 2
+
+        if self.cursor < 0 and self.task > 0:
+            self.cursor = self.cursorLimit
+            self.task -= 1
+            self.y -= self.lines
+            self.cursorPos -= 2
+            self.page -= 1
+            self.n -= 2
+            helpers.updatePageNumber(self.pageMenu, self.page)
+            self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
+
+        elif self.cursor < 0 and self.task == 0:
+            self.cursor = 0
+            self.n -= 2
+            self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
+
+        else:
+            self.cursorPos -= 2
+            self.task -= 1
+            self.n -= 2
+            self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
+            helpers.updatePageNumber(self.pageMenu, self.page)
+        helpers.updateTasks(helpers.getTasks(), self.taskWin, self.y)
+        helpers.updateMovementWin(self.movementWindow, self.cursor)
+
+
+    def keyQ(self):
+        exit(0)
+
