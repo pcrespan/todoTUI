@@ -82,7 +82,9 @@ class Interface:
 
             helpers.updateMovementWin(self.movementWindow, self.cursor)
                 
-
+    
+    # Opening csv too many times, need to store it as an attribute
+    # for better design
     def keyF(self):
         helpers.finishTask(self.task)
         self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
@@ -101,24 +103,21 @@ class Interface:
             self.cursorPos -= 2
             self.page -= 1
             self.n -= 2
-            helpers.updatePageNumber(self.pageMenu, self.page)
-            self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
 
         elif self.cursor < 0 and self.task == 0:
             self.cursor = 0
             self.n -= 2
-            self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
 
         else:
             self.cursorPos -= 2
             self.task -= 1
             self.n -= 2
-            self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
-            helpers.updatePageNumber(self.pageMenu, self.page)
+
+        self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
+        helpers.updatePageNumber(self.pageMenu, self.page)
         helpers.updateTasks(helpers.getTasks(), self.taskWin, self.y)
         helpers.updateMovementWin(self.movementWindow, self.cursor)
 
 
     def keyQ(self):
         exit(0)
-
