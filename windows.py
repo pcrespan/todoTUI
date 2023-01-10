@@ -22,14 +22,16 @@ def getMenuWin():
     menuWin = curses.newwin(1, curses.COLS - 4, curses.LINES - 2, 2)
     menuWin.clear()
     menuWin.refresh()
-    menuWin.addstr(0, 1, "" + " " + "Previous page")
-    menuWin.addstr(0, curses.COLS - 16,  "Next page" + " " + "")
+    menuWin.addstr(0, 1, "  Up")
+    menuWin.addstr(0, 8, " Down")
+    menuWin.addstr(0, 16, "f Finish")
+    menuWin.addstr(0, 26, "r Remove")
     menuWin.refresh()
     return menuWin
 
 
 def getPageMenu():
-    pageMenu = curses.newwin(1, 20, curses.LINES - 2, round((curses.COLS - 5) / 2))
+    pageMenu = curses.newwin(1, 8, curses.LINES - 2, curses.COLS - 11)
     pageMenu.clear()
     pageMenu.addstr(0, 0, "Page 1")
     pageMenu.refresh()
