@@ -96,23 +96,22 @@ class Interface:
 
         self.cursor -= 2
 
+        # Cursor on top, not on first task
         if self.cursor < 0 and self.task > 0:
+            self.updateMaxCursorValues()
             self.cursor = self.cursorLimit
-            self.task -= 1
-            self.y -= self.lines
-            self.cursorPos -= 2
+            self.y -= self.lines    # Scroll one page up
             self.page -= 1
-            self.n -= 2
 
+        # Cursor on top, first task
         elif self.cursor < 0 and self.task == 0:
             self.cursor = 0
             self.n -= 2
 
         else:
-            self.cursorPos -= 2
-            self.task -= 1
-            self.n -= 2
+            self.updateMaxCursorValues()
 
+        # Refresh tasks, page number and cursor position
         self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
         helpers.updatePageNumber(self.pageMenu, self.page)
         helpers.updateTasks(helpers.getTasks(), self.taskWin, self.y)
@@ -121,3 +120,10 @@ class Interface:
 
     def keyQ(self):
         exit(0)
+
+
+    # Limit max cursor position
+    def updateMaxCursorValues(self):
+        self.cursorPos -= 2
+        self.task -= 1
+        self.n -= 2
