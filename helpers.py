@@ -115,16 +115,7 @@ def checkArgs():
         listTasks()
 
 
-# Needs refactoring
-def showTasks(tasks):
-    taskFinishedColor = getFinishedTaskColor()
-
-    # Making window bigger so that it
-    # doesn't glitch showing unwanted tasks
-    taskQtd = len(tasks) * 4
-
-    taskWin = windows.getTaskWin(taskQtd)
-
+def printTasks(taskWin, taskFinishedColor, tasks):
     n = 0
     i = 1
 
@@ -135,27 +126,27 @@ def showTasks(tasks):
             taskWin.addstr(n, 0, " " * 2 + str(i) + "." + " " + task["task"])
         i += 1
         n += 2
-    taskWin.refresh(0, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
 
+    # This is probably unnecessary
     # n is where the last task is located
-    return n, taskWin
+    return n
+
+
+# Needs refactoring
+def showTasks(tasks, taskWin):
+    taskFinishedColor = getFinishedTaskColor()
+    n = printTasks(taskWin, taskFinishedColor, tasks)
+    # First refresh on screen
+    taskWin.refresh(0, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
+    return n
 
 
 # Obviously needs refactoring
 def updateTasks(tasks, taskWin, y):
     taskWin.clear()
     taskFinishedColor = getFinishedTaskColor()
-
-    n = 0
-    i = 1
-
-    for task in tasks:
-        if task["status"] == "finished":
-            taskWin.addstr(n, 0, "" + " " + str(i) + "." + " " + task["task"], taskFinishedColor)
-        else:
-            taskWin.addstr(n, 0, " " * 2 + str(i) + "." + " " + task["task"])
-        n += 2
-        i += 1
+    printTasks(taskWin, taskFinishedColor, tasks)
+    # Refresh screen and show previous position
     taskWin.refresh(y, 0, 1, 6, curses.LINES - 5, curses.COLS - 4)
 
 
