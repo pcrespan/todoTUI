@@ -112,10 +112,7 @@ class Interface:
             self.updateMaxCursorValues()
 
         # Refresh tasks, page number and cursor position
-        self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
-        helpers.updatePageNumber(self.pageMenu, self.page)
-        helpers.updateTasks(helpers.getTasks(), self.taskWin, self.y)
-        helpers.updateMovementWin(self.movementWindow, self.cursor)
+        self.refreshAll()
 
 
     def keyQ(self):
@@ -127,3 +124,11 @@ class Interface:
         self.cursorPos -= 2
         self.task -= 1
         self.n -= 2
+
+
+    # Refreshes task window, page number and cursor position
+    def refreshAll(self):
+        self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
+        helpers.updatePageNumber(self.pageMenu, self.page)
+        helpers.updateTasks(helpers.getTasks(), self.taskWin, self.y)
+        helpers.updateMovementWin(self.movementWindow, self.cursor)
