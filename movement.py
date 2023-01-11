@@ -98,7 +98,7 @@ class Interface:
 
         # Cursor on top, not on first task
         if self.cursor < 0 and self.task > 0:
-            self.updateMaxCursorValues()
+            self.decreaseValues()
             self.cursor = self.cursorLimit
             self.y -= self.lines    # Scroll one page up
             self.page -= 1
@@ -109,7 +109,7 @@ class Interface:
             self.n -= 2
 
         else:
-            self.updateMaxCursorValues()
+            self.decreaseValues()
 
         # Refresh tasks, page number and cursor position
         self.refreshAll()
@@ -120,7 +120,7 @@ class Interface:
 
 
     # Limit max cursor position
-    def updateMaxCursorValues(self):
+    def decreaseValues(self):
         self.cursorPos -= 2
         self.task -= 1
         self.n -= 2
