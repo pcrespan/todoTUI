@@ -5,6 +5,7 @@ import windows
 
 class Interface:
     def __init__(self, taskWin, pageMenu, n):
+        self.tasks = helpers.getTasks()
         self.taskWin = taskWin
         self.movementWindow = windows.getMovementWindow()
         self.pageMenu = pageMenu
@@ -17,7 +18,6 @@ class Interface:
         self.cursorPos = 0
         self.task = 0
         self.page = 1
-        # Problem is here, executing functions on dictionary
         self.acceptedMoves = {
                 "KEY_UP": self.keyUp,
                 "KEY_DOWN": self.keyDown,
@@ -86,13 +86,13 @@ class Interface:
     # Opening csv too many times, need to store it as an attribute
     # for better design
     def keyF(self):
-        helpers.finishTask(self.task)
+        helpers.finishTask(self.task, self.tasks)
         self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
         helpers.updateTasks(helpers.getTasks(), self.taskWin, self.y)
 
 
     def keyR(self):
-        helpers.removeTask(self.task)
+        helpers.removeTask(self.task, self.tasks)
 
         self.cursor -= 2
 
@@ -119,7 +119,6 @@ class Interface:
         exit(0)
 
 
-    # Limit max cursor position
     def decreaseValues(self):
         self.cursorPos -= 2
         self.task -= 1

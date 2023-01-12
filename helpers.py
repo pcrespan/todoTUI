@@ -42,8 +42,7 @@ def listTasks():
     exit(1)
     
 
-def finishTask(taskNumber):
-    tasks = getTasks()
+def finishTask(taskNumber, tasks):
     updatedStatus = ""
 
     if taskNumber > len(tasks) - 1:
@@ -67,8 +66,7 @@ def finishTask(taskNumber):
         return updatedStatus
 
 
-def removeTask(taskNumber):
-    tasks = getTasks()
+def removeTask(taskNumber, tasks):
 
     if taskNumber < 0 or taskNumber > len(tasks) - 1:
         print("Invalid task number.")
