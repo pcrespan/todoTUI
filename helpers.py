@@ -84,8 +84,6 @@ def removeTask(taskNumber, tasks):
 def checkArgs():
     parser = argparse.ArgumentParser(prog="todoTUI", description="TUI to-do list")
     parser.add_argument("-a", help="Add task")
-    parser.add_argument("-f", help="Finish task")
-    parser.add_argument("-r", help="Remove task")
     parser.add_argument("-l", help="List tasks", action="store_true")   # Action store_true means default=False
     args = parser.parse_args()
 
@@ -93,21 +91,6 @@ def checkArgs():
         addTask(args.a)
         print("Task successfully added")
         exit(0)
-
-    if args.f:
-        taskNumber = int(args.f) - 1
-
-        # Need to add this conditional to finishTask
-        if taskNumber < 0:
-            print("Invalid task number.")
-            exit(1)
-        status = finishTask(taskNumber)
-        print(f"Task {status}.")
-        exit(0)
-
-    if args.r:
-        taskNumber = int(args.r) - 1
-        removeTask(taskNumber)
 
     if args.l:
         listTasks()

@@ -10,6 +10,7 @@ from geometry import getTaskRectangle, getMenuRectangle
 helpers.checkArgs()
 
 # Checking if there are tasks
+# before initializing curses
 tasks = helpers.getTasks()
 
 # Initializing curses
@@ -28,7 +29,6 @@ def main(stdscr):
     stdscr.refresh()
 
     # Creating task window
-    tasks = helpers.getTasks()
     taskQtd = len(tasks) * 4
     taskWin = windows.getTaskWin(taskQtd)
 
