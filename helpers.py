@@ -1,7 +1,6 @@
 import curses
 import argparse
 import csv
-import windows
 
 
 def addTask(task):
