@@ -6,8 +6,6 @@ setup(
     name="todoTUI",
     version="1.0",
     description="TUI to-do list app",
-    author="Pedro Crespan",
-    author_email="pedrocrespan@hotmail.com",
     url="https://github.com/pcrespan/todoTUI",
     packages=find_packages('todo'),
     entry_points={
