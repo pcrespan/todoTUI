@@ -22,21 +22,29 @@ python3 setup.py install
 
 > #### Opening app
 >
->```todo```
+```
+todo
+```
 
 > #### Using flags
 > 
 > ###### Add tasks
 >
-> ```todo -a "Your task goes here"```
+```
+todo -a "Your task goes here"
+```
 >
 > ###### Open help menu
 >
-> ```todo --help```
->
+```
+todo --help
+```
+
 > List tasks
 >
-> ```todo -l```
+```
+todo -l
+```
 
 > #### Movement and task management
 >
