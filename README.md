@@ -20,28 +20,27 @@ python3 setup.py install
 > - a Add tasks
 > - l List tasks
 
-> #### Opening app
->
+#### Opening app
 ```
 todo
 ```
 
-> #### Using flags
-> 
-> ###### Add tasks
->
+#### Using flags
+ 
+###### Add tasks
+
 ```
 todo -a "Your task goes here"
 ```
->
-> ###### Open help menu
->
+
+###### Open help menu
+
 ```
 todo --help
 ```
 
-> List tasks
->
+###### List tasks
+
 ```
 todo -l
 ```
