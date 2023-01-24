@@ -3,8 +3,11 @@ import argparse
 import csv
 
 
+# Put path to script here
+path = ''
+
 def addTask(task):
-    with open("todoTasks.csv", "a") as file:
+    with open(path, "a") as file:
         writer = csv.DictWriter(file, fieldnames=["task", "status"])
         writer.writerow({"task": task, "status": "todo"})
 
@@ -12,7 +15,7 @@ def addTask(task):
 def getTasks():
     tasks = []
 
-    with open("todoTasks.csv", "r") as file:
+    with open(path, "r") as file:
         reader = csv.DictReader(file)
 
         for task in reader:
@@ -48,7 +51,7 @@ def finishTask(taskNumber, tasks):
         print("Task doesn't exist.")
         exit(1)
 
-    with open("todoTasks.csv", "w") as file:
+    with open(path, "w") as file:
         writer = csv.DictWriter(file, fieldnames=["task", "status"])
 
         if tasks[taskNumber]["status"] == "finished":
@@ -71,7 +74,7 @@ def removeTask(taskNumber, tasks):
         print("Invalid task number.")
         exit(1)
 
-    with open("todoTasks.csv", "w") as file:
+    with open(path, "w") as file:
         writer = csv.DictWriter(file, fieldnames=["task", "status"])
 
         del tasks[taskNumber]
