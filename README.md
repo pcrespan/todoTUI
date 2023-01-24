@@ -1,4 +1,4 @@
-# todoTUI (under development)
+# todoTUI
 
 ## About
 
@@ -8,7 +8,7 @@ The user can also scroll through different pages of tasks (in case there are mor
 
 ## Pre-usage
 
-Specify `todoTasks.csv` file path on `helpers.py`
+Specify `todoTasks.csv` file path inside `helpers.py`
 
 E.g:
 
@@ -16,10 +16,16 @@ E.g:
 /home/(user)/(script-directory)/todoTUI/todo/todoTasks.csv
 ```
 
-Alias to run program (inside of ~/.bashrc):
+Create alias to run program (inside of `~/.bashrc`):
 
 ```
 alias todo='python3 /home/(user)/scripts/todoTUI/todo/main.py'
+```
+
+Update `~/.bashrc`
+
+```
+source ~/.bashrc
 ```
 
 ## Usage
