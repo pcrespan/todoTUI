@@ -6,10 +6,20 @@ todoTUI is a minimalistic to-do list app written in Python and relies on `curses
 The movement is based on keyboard, where the user can add, finish and remove tasks. 
 The user can also scroll through different pages of tasks (in case there are more tasks that the terminal can display).
 
-## Pre-usage (not working yet)
+## Pre-usage
+
+Specify `todoTasks.csv` file path on `helpers.py`
+
+E.g:
 
 ```
-python3 setup.py install
+/home/(user)/(script-directory)/todoTUI/todo/todoTasks.csv
+```
+
+Alias to run program (inside of ~/.bashrc):
+
+```
+alias todo='python3 /home/(user)/scripts/todoTUI/todo/main.py'
 ```
 
 ## Usage
