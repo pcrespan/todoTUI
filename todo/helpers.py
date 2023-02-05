@@ -110,12 +110,10 @@ def printTasks(taskWin, taskFinishedColor, tasks):
         i += 1
         n += 2
 
-    # This is probably unnecessary
     # n is where the last task is located
     return n
 
 
-# Needs refactoring
 def showTasks(tasks, taskWin):
     taskFinishedColor = getFinishedTaskColor()
     n = printTasks(taskWin, taskFinishedColor, tasks)
@@ -124,7 +122,6 @@ def showTasks(tasks, taskWin):
     return n
 
 
-# Obviously needs refactoring
 def updateTasks(tasks, taskWin, y):
     taskWin.clear()
     taskFinishedColor = getFinishedTaskColor()
