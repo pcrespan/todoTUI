@@ -19,7 +19,6 @@ stdscr = curses.initscr()
 # Making cursor invisible
 curses.curs_set(0)
 
-# Needs refactoring
 def main(stdscr):
     stdscr.clear()
 
