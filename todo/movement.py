@@ -83,8 +83,6 @@ class Interface:
             helpers.updateMovementWin(self.movementWindow, self.cursor)
                 
     
-    # Opening csv too many times, need to store it as an attribute
-    # for better design
     def keyF(self):
         helpers.finishTask(self.task, self.tasks)
         self.taskWin.refresh(self.y, 0, 1, 6, self.lines, self.cols)
